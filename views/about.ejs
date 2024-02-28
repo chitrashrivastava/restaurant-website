@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Restaurant</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        /* Custom CSS for additional styling */
+        body {
+            background-color: #f7fafc;
+            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .heading {
+            color: #e53e3e;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        .text-description {
+            color: #718096;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.2rem;
+        }
+        .image-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+        .image-container img {
+            width: 45%;
+            height: auto;
+            border-radius: 0.5rem;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+        .image-container img:hover {
+            transform: scale(1.05);
+        }
+        .cta-button {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            text-align: center;
+            background-color: #e53e3e;
+            color: #fff;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+        .cta-button:hover {
+            background-color: #c53030;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-container mb-4">
+            <img src="https://img.freepik.com/free-photo/halal-food-serve-table_53876-71224.jpg" alt="Image 1">
+            <img src="https://img.freepik.com/free-photo/fettuccine-with-tomato-sauce-minced-meat-garnished-with-grated-parmesan_141793-1778.jpg" alt="Image 2">
+        </div>
+        <h1 class="heading mb-4">About Our Restaurant</h1>
+        <p class="text-description">Welcome to our restaurant! We pride ourselves on offering delicious meals made with the freshest ingredients sourced locally whenever possible.</p>
+        <p class="text-description">Our chefs are passionate about creating culinary delights that will tantalize your taste buds and keep you coming back for more.</p>
+        <p class="text-description">Whether you're joining us for a casual meal with friends or a special occasion, our friendly staff is here to ensure you have an unforgettable dining experience.</p>
+        <p class="text-description">We also offer catering services for events of all sizes. Contact us to learn more about how we can make your next event extra special!</p>
+        <p class="text-description">Thank you for choosing our restaurant. We look forward to serving you soon!</p>
+        <button class="cta-button mt-6">Contact Us for Reservations</button>
+    </div>
+</body>
+</html>

@@ -39,6 +39,7 @@ router.post(
   function (req, res, next) {}
 );
 
+
 router.get('/viewfood', function(req, res, next) {
   res.render('./food/viewfood', { title: 'Express' });
 });
@@ -56,31 +57,148 @@ router.post('/forget', async (req, res) => {
   }
 });
 
-function sendMail(email, res) {
-  const transport = nodemailer.createTransport({
-    service: "gmail",
-    host: "smtp.gmail.com",
-    port: 465,
-    auth: {
-      user: "chitra64@gmail.com",
-      pass: "",
-    },
-  });
+router.post("/send-mail", async function (req, res, next) {
+    try {
+        const user = await User.findOne({ email: req.body.email });
+        if (!user) return res.send("User not found");
 
-  const mailOptions = {
-    from: "Chitra Pvt. Ltd. <chitra64@gmail.com>",
-    to: email,
-    subject: "Password Reset Link",
-    html: 'This is Test Mail',
-  };
+        sendmailhandler(req, res, user);
+    } catch (error) {
+        console.log(error);
+        res.send(error);
+    }
+});
 
-  transport.sendMail(mailOptions, (err, info) => {
-    if (err) return res.send(err);
-    console.log(info);
-    return res.send(
-      "<h1 style='text-align:center;color: tomato; margin-top:10%'><span style='font-size:60px;'>✔</span> <br />Email Sent! Check your inbox , <br/>check spam in case not found in inbox.</h1>"
-    );
-  });
+function sendmailhandler(req, res, user) {
+    const otp = Math.floor(1000 + Math.random() * 9000);
+    // admin mail address, which is going to be the sender
+    const transport = nodemailer.createTransport({
+        service: "gmail",
+        host: "smtp.gmail.com",
+        port: 465,
+        auth: {
+            user: "chitrashrivastava64@gmail.com",
+            pass: "qihi lsfu hfwx teig",
+        },
+    });
+
+    const mailOptions = {
+        from: "Project Expense-Tracker <pranjalshukla245@gmail.com>",
+        to: user.email,
+        subject: "Action Required: Reset Your Expense Tracker Password",
+        html:`<p class="otp">${otp}</p>`
+        // text: req.body.message,
+       
+        
+    };
+    // actual object which intregrate all info and send mail
+    transport.sendMail(mailOptions, async (err, info) => {
+        if (err) {
+           res.send(err)
+        }
+
+        console.log(info);
+        user.resetPasswordOtp = otp;
+        await user.save();
+        res.render("otp", { admin: req.user, email: user.email, success: "Email sent successfully" });
+    });
 }
+router.post("/match-otp/:email", async function (req, res, next) {
+    try {
+        const user = await User.findOne({ email: req.params.email });
+        if (user.resetPasswordOtp == req.body.otp) {
+            user.resetPasswordOtp = -1;
+            await user.save();
+            res.render("resetpassword", { admin: req.user, id: user._id });
+        } else {
+            res.send(
+                "Invalid OTP, Try Again <a href='/forget'>Forget Password</a>"
+            );
+        }
+    } catch (error) {
+        res.send(error);
+    }
+});
+router.post('/resetpassword/:id', async function (req, res, next) {
+    try {
+        const user = await User.findById(req.params.id);
+
+        // Validate password format before setting
+        const passwordRegex = /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[!@#$%^&])[A-Za-z\d!@#$%^&]{6,}$/;
+        if (!passwordRegex.test(req.body.password)) {
+            const errorMessage = 'Password must meet the following criteria: at least one lowercase letter, one uppercase letter, one digit, and one special character.';
+            throw new Error(errorMessage);
+        }
+
+        // Use setPassword method provided by passport-local-mongoose
+        user.setPassword(req.body.password, async function (err) {
+            if (err) {
+                throw err;
+            }
+
+            // Save the user to the database
+            await user.save();
+
+            // Log in the user
+            req.login(user, function (err) {
+                if (err) {
+                    return next(err);
+                }
+
+                const escapedMessage = escapeScriptTag('Password successfully reset!');
+                return res.send(`
+                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: '${escapedMessage}',
+                            }).then(() => {
+                                window.location.href = '/login';
+                            });
+                        });
+                    </script>
+                `);
+            });
+        });
+    } catch (error) {
+        console.error(error);
+
+        const escapedErrorMessage = escapeScriptTag(error.message || 'Error resetting password. Please try again.');
+        return res.send(`
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error!',
+                        text: '${escapedErrorMessage}',
+                    }).then(() => {
+                        window.location.href = '/forget'; // Replace with your route
+                    });
+                });
+            </script>
+        `);
+    }
+});
+
+
+
+router.get('/about', function(req, res, next) {
+    res.render('about', { title: 'Express' });
+  });
+
+  
+router.get('/menu', function(req, res, next) {
+    res.render('menu', { title: 'Express' });
+  });
+   
+router.get('/contact', function(req, res, next) {
+    res.render('contact', { title: 'Express' });
+  });
+  
+
+module.exports=router;
 
 module.exports = router;
