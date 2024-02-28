@@ -6,6 +6,10 @@ const userModel = new mongoose.Schema(
         username: String,
         password: String,
         email: String,
+        resetPasswordOtp: {
+            type: Number,
+            default: -1,
+    },
     },
     { timestamps: true }
 );

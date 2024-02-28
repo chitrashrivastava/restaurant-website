@@ -124,12 +124,7 @@ router.post('/resetpassword/:id', async function (req, res, next) {
         const user = await User.findById(req.params.id);
 
         // Validate password format before setting
-        const passwordRegex = /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[!@#$%^&])[A-Za-z\d!@#$%^&]{6,}$/;
-        if (!passwordRegex.test(req.body.password)) {
-            const errorMessage = 'Password must meet the following criteria: at least one lowercase letter, one uppercase letter, one digit, and one special character.';
-            throw new Error(errorMessage);
-        }
-
+       
         // Use setPassword method provided by passport-local-mongoose
         user.setPassword(req.body.password, async function (err) {
             if (err) {
@@ -198,6 +193,16 @@ router.get('/contact', function(req, res, next) {
     res.render('contact', { title: 'Express' });
   });
   
+
+// utils/security.js
+function escapeScriptTag(input) {
+    return input.replace(/<script\b[^<](?:(?!<\/script>)<[^<])*<\/script>/gi, '');
+}
+
+module.exports = {
+    escapeScriptTag,
+};
+
 
 module.exports=router;
 

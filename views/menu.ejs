@@ -3,14 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <title>Menu  - Restaurant</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Menu - Restaurant</title> <!-- Corrected the title -->
+    <link rel="stylesheet" href="stylesheets/menu.css">
 </head>
+<style>  
+nav{
+    width: 100vw;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 75px;
+}
+ul{
+    display: flex;
+    gap: 40px;
+    list-style: none;
+    /* align-items: center; */
+}
+
+ul li{
+    list-style: none;
+    /* padding:  0 30px; */
+}
+  
+</style>
 <body>
-<div>
-    
-</div>
-    
+    <div class="main">
+        <nav>
+            <div class="logo">logo</div>
+            <ul>
+             <li>
+            <a href="/menu" class="text-black-400 text-[20px] hover:text-yellow-700">Menu</a>
+            <a href="/about" class="text-black-400 text-[20px] hover:text-yellow-700">About Us</a>
+            <a href="/contact" class="text-black-400 text-[20px] hover:text-yellow-700">Contact</a>
+            <a href="/login" class="bg-white text-black px-4 py-2 rounded-full hover:bg-gray-100 transition-colors duration-300">Login</a>
+        </li>
+        </ul>
+
+        </nav>
+        <div class="container">
+
+        </div>
+    </div>
 </body>
 </html>
