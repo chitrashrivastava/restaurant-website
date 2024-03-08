@@ -4,8 +4,9 @@ const User = require("../models/usermodel");
 const passport = require("passport");
 const nodemailer = require('nodemailer');
 const LocalStrategy = require("passport-local");
-
-passport.use(new LocalStrategy(User.authenticate()));
+const Seller=require('../models/sellermodel')
+const bcrypt = require('bcrypt');
+const session = require('express-session')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -30,15 +31,44 @@ router.get('/login', function(req, res, next) {
   res.render('./auth/login', { title: 'Express' });
 });
 
-router.post(
-  "/login",
-  passport.authenticate("local", {
-      successRedirect: "/viewfood",
-      failureRedirect: "/login",
-  }),
-  function (req, res, next) {}
-);
+router.post("/login", async function(req, res, next) {
+    const { email, password } = req.body;
 
+    try {
+        // Check if the user exists in the buyer model
+        const buyer = await User.findOne({ email });
+        if (buyer) {
+            // Compare passwords
+            const isPasswordValid = await bcrypt.compare(password, buyer.password);
+            if (isPasswordValid) {
+                // Store the buyer's ID in the session
+                req.session.userId = buyer._id;
+                // Redirect to buyer dashboard
+                return res.redirect("/buyer-profile");
+            }
+        }
+
+        // Check if the user exists in the seller model
+        const seller = await Seller.findOne({ email });
+        if (seller) {
+            // Compare passwords
+            const isPasswordValid = await bcrypt.compare(password, seller.password);
+            if (isPasswordValid) {
+                // Store the seller's ID in the session
+                req.session.userId = seller._id;
+                // Redirect to seller dashboard
+                return res.redirect("/seller-profile");
+            }
+        }
+
+        // If user does not exist or password is incorrect, redirect to login page
+        return res.redirect("/login");
+    } catch (error) {
+        // Handle errors
+        console.error("Login error:", error);
+        return res.redirect("/login");
+    }
+});
 
 router.get('/viewfood', function(req, res, next) {
   res.render('./food/viewfood', { title: 'Express' });
@@ -123,8 +153,7 @@ router.post('/resetpassword/:id', async function (req, res, next) {
     try {
         const user = await User.findById(req.params.id);
 
-        // Validate password format before setting
-       
+        
         // Use setPassword method provided by passport-local-mongoose
         user.setPassword(req.body.password, async function (err) {
             if (err) {
@@ -203,7 +232,98 @@ module.exports = {
     escapeScriptTag,
 };
 
+router.get('/seller-signup',(req,res,next)=>{
+    res.render('auth/signupseller')
+})
+
+// Assuming you have a Seller model defined
+router.post('/seller-signup', async (req, res, next) => {
+    try {
+        const { companyname, email, password, confirm_password } = req.body;
+
+        // Check if passwords match
+        if (password !== confirm_password) {
+            return res.status(400).json({ message: "Passwords do not match" });
+        }
+
+        // Check if the email is already registered as a seller
+        const existingSeller = await Seller.findOne({ email });
+        if (existingSeller) {
+            return res.status(400).json({ message: "Email already exists as a seller" });
+        }
+
+        // Check if the email is already registered as a buyer
+        const existingBuyer = await User.findOne({ email });
+        if (existingBuyer) {
+            return res.status(400).json({ message: "Email already exists as a buyer" });
+        }
+
+        // Create a new seller instance
+        const newSeller = new Seller({ companyname, email });
+
+        // Hash the password
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        // Set the hashed password
+        newSeller.password = hashedPassword;
+
+        // Save the new seller to the database
+        await newSeller.save();
+
+        // Send a success response
+        res.status(201).json({ message: "Seller registered successfully" });
+    } catch (error) {
+        // Handle any errors
+        console.error("Error in seller signup:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+router.get('/buyer-signup',(req,res)=>{
+    res.render("signupbuyer")
+})
+router.post('/buyer-signup', async (req, res, next) => {
+    try {
+        const { username, email, password, confirm_password } = req.body;
+
+        // Check if passwords match
+        if (password !== confirm_password) {
+            return res.status(400).json({ message: "Passwords do not match" });
+        }
+
+        // Check if the email is already registered as a buyer
+        const existingBuyer = await User.findOne({ email });
+        if (existingBuyer) {
+            return res.status(400).json({ message: "Email already exists as a buyer" });
+        }
+
+        // Check if the email is already registered as a seller
+        const existingSeller = await Seller.findOne({ email });
+        if (existingSeller) {
+            return res.status(400).json({ message: "Email already exists as a seller" });
+        }
+
+        // Create a new buyer instance
+        const newBuyer = new User({ username, email });
+
+        // Hash the password
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+        // Set the hashed password
+        newBuyer.password = hashedPassword;
+
+        // Save the new buyer to the database
+        await newBuyer.save();
+
+        // Send a success response
+        res.status(201).json({ message: "Buyer registered successfully" });
+    } catch (error) {
+        // Handle any errors
+        console.error("Error in buyer signup:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
 
 module.exports=router;
 
-module.exports = router;

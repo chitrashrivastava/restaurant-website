@@ -12,7 +12,7 @@ require('./models/config')
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
+const profile=require('./routes/profile')
 var app = express();
 
 // view engine setup
@@ -38,7 +38,7 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-
+app.use('/',profile)
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

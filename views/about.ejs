@@ -3,79 +3,381 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us - Restaurant</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>    
+</head>
+<body>
     <style>
-        /* Custom CSS for additional styling */
-        body {
-            background-color: #f7fafc;
-            color: #333;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  html,body{
+    width: 100%;
+    height: 100%;
+  }
+  nav{
+  width: 100%;
+  height: 100px;
+  background-color:#3c99e6b9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-transform: uppercase;
+  padding: 0 15%;
+  color: white;
+  }
+  a{
+    margin: 0 15px;
+    color: white;
+    font-size: 20px;
+  }
+  .logo{
+    font-size: 22px;
+    text-transform: uppercase;
+    color: white;
+  }
+  .page2{
+    width: 75%;
+    height: 78%;
+    background-color:#8389db;
+    margin-top: 3%;
+    margin-left: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .leftp2{
+    width: 44%;
+    height: 80%;
+    background-color:rgba(46, 41, 60, 0.478);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    line-height: 34px;
+  }
+  h1{
+    margin-top: 6%;
+    margin-left: 4%;
+    font-size: 20px;
+    line-height: 25px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  }
+  h5{
+    margin-left: 4%;
+  }
+  h2{
+    margin-left: 4%;
+    font-size: 45px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+  .rightp2{
+    width: 44%;
+    height: 70%;
+    /* background-color: rgba(52, 188, 77, 0.897); */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5px ;
+    position: relative;
+  }
+  .rlide{
+    width: 89%;
+    height: 78%;
+    background-color: rgba(23, 18, 20, 0.807);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+      padding:30px 40px ; 
+      position: absolute; 
+      color: white;
+      border-radius: 5px;
+  }
+  a{
+    text-decoration: none;
+  }
+  .navbar {
+            background-image: linear-gradient(to right, #4F46E5, #8F94FB, #8F94FB, #4F46E5);
+            padding: 1rem 0;
         }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        .heading {
-            color: #e53e3e;
-            font-size: 2.5rem;
-            text-align: center;
-            margin-bottom: 1.5rem;
-        }
-        .text-description {
-            color: #718096;
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 1.2rem;
-        }
-        .image-container {
+
+        .navbar-container {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 2rem;
-        }
-        .image-container img {
-            width: 45%;
-            height: auto;
-            border-radius: 0.5rem;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease-in-out;
-        }
-        .image-container img:hover {
-            transform: scale(1.05);
-        }
-        .cta-button {
-            display: block;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
             width: 100%;
-            padding: 1rem;
-            text-align: center;
-            background-color: #e53e3e;
-            color: #fff;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: background-color 0.3s ease-in-out;
         }
-        .cta-button:hover {
-            background-color: #c53030;
+
+        .navbar-brand {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar-links {
+            display: flex;
+            align-items: center;
+            list-style: none;
+        }
+
+        .navbar-links a {
+            color: white;
+            font-size: 20px; /* Increased font size */
+            margin-right: 1rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-links a:hover {
+            color: rgb(7, 7, 7);
+        }
+
+        .login-button {
+            background-color: rgb(54, 42, 231);
+            color: black;
+            padding: 0.5rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            font-size: 18px; /* Increased font size */
+        }
+
+        .login-button:hover {
+            background-color: #E5E5E5;
+        }
+
+    </style>
+
+
+<link rel="stylesheet" href="stylesheets/about.css">
+<nav class="navbar">
+    <div class="navbar-container">
+        <a href="/" class="navbar-brand">Restaurant Name</a>
+        <div class="navbar-links">
+            <a href="/menu">Menu</a>
+            <a href="/about">About Us</a>
+            <a href="/contact">Contact</a>
+            <a href="/login" class="login-button">Sign In</a> <!-- Changed text to Sign In -->
+        </div>
+    </div>
+</nav>
+  
+  <div class="page2">
+    <div class="leftp2">
+      <h5>look at our google page...</h5>
+      <h2>ABOUT US</h2>
+      <h1>we are create our own platform of communication 
+      we provide our way of coordination
+      </h1>
+  
+    </div>
+    <div class="rightp2">
+     <div class="rlide">
+      <p class="have">Have an Account?</p>
+     <p> we are available here to create your account
+     create your account and accompolish our site </p>
+     <a  class="up" href="/signin">SIGN IN</a>
+     </div>
+    </div>
+   
+  </div>
+  
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html,body{
+            width: 100%;
+            height: 100%;
+        }
+        nav{
+            width: 100%;
+            height: 100px;
+            background-color:#3c99e6b9;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-transform: uppercase;
+            padding: 0 15%;
+            color: white;
+        }
+        a{
+            margin: 0 15px;
+            color: white;
+            font-size: 20px;
+            text-decoration: none;
+        }
+        .logo{
+            font-size: 22px;
+            text-transform: uppercase;
+            color: white;
+        }
+        .page2{
+            width: 75%;
+            height: 78%;
+            background-color:#8389db;
+            margin-top: 3%;
+            margin-left: 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .leftp2{
+            width: 44%;
+            height: 80%;
+            background-color:rgba(46, 41, 60, 0.478);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 34px;
+        }
+        h1{
+            margin-top: 6%;
+            margin-left: 4%;
+            font-size: 20px;
+            line-height: 25px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        h5{
+            margin-left: 4%;
+        }
+        h2{
+            margin-left: 4%;
+            font-size: 45px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+        .rightp2{
+            width: 44%;
+            height: 70%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 5px ;
+            position: relative;
+        }
+        .rlide{
+            width: 89%;
+            height: 78%;
+            background-color: rgba(23, 18, 20, 0.807);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            padding:30px 40px ; 
+            position: absolute; 
+            color: white;
+            border-radius: 5px;
+        }
+        .navbar {
+            background-image: linear-gradient(to right, #4F46E5, #8F94FB, #8F94FB, #4F46E5);
+            padding: 1rem 0;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .navbar-brand {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar-links {
+            display: flex;
+            align-items: center;
+            list-style: none;
+        }
+
+        .navbar-links a {
+            color: white;
+            font-size: 20px; /* Increased font size */
+            margin-right: 1rem;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-links a:hover {
+            color: rgb(7, 7, 7);
+        }
+
+        .login-button {
+            background-color: rgb(54, 42, 231);
+            color: black;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            font-size: 18px; /* Increased font size */
+        }
+
+        .login-button:hover {
+            background-color: #E5E5E5;
         }
     </style>
 </head>
 <body>
-    
-    <div class="container">
-        <div class="image-container mb-4">
-            <img src="https://img.freepik.com/free-photo/halal-food-serve-table_53876-71224.jpg" alt="Image 1">
-            <img src="https://img.freepik.com/free-photo/fettuccine-with-tomato-sauce-minced-meat-garnished-with-grated-parmesan_141793-1778.jpg" alt="Image 2">
+<nav>
+    <div class="navbar-container">
+        <a href="/" class="navbar-brand">Restaurant Name</a>
+        <div class="navbar-links">
+            <a href="/menu">Menu</a>
+            <a href="/about">About Us</a>
+            <a href="/contact">Contact</a>
+            <a href="/login" class="login-button">Sign In</a> <!-- Changed text to Sign In -->
         </div>
-        <h1 class="heading mb-4">About Our Restaurant</h1>
-        <p class="text-description">Welcome to our restaurant! We pride ourselves on offering delicious meals made with the freshest ingredients sourced locally whenever possible.</p>
-        <p class="text-description">Our chefs are passionate about creating culinary delights that will tantalize your taste buds and keep you coming back for more.</p>
-        <p class="text-description">Whether you're joining us for a casual meal with friends or a special occasion, our friendly staff is here to ensure you have an unforgettable dining experience.</p>
-        <p class="text-description">We also offer catering services for events of all sizes. Contact us to learn more about how we can make your next event extra special!</p>
-        <p class="text-description">Thank you for choosing our restaurant. We look forward to serving you soon!</p>
-        <button class="cta-button mt-6">Contact Us for Reservations</button>
     </div>
+</nav>
+  
+<div class="page2">
+    <div class="leftp2">
+        <h5>look at our google page...</h5>
+        <h2>ABOUT US</h2>
+        <h1>We offer healthier options on their menus, such as salads, grilled items, and whole grain options. Providing nutritional information alongside menu items can also help customers</h1>
+    </div>
+    <div class="rightp2">
+        <div class="rlide">
+            <p class="have">Have an Account?</p>
+            <p>We are available here to create your account. Create your account and accomplish our site.</p>
+            <a class="up" href="/signin">SIGN IN</a>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+<script>
+    gsap.from(".rlide", { duration: 1, opacity: 0, y: 50, delay: 1, repeat: 2 });
+    gsap.from(".leftp2", { duration: 1, opacity: 0, x: 50, delay: 1, repeat: 2 });
+
+</script>
+
 </body>
 </html>
+
+  
