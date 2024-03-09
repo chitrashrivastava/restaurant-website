@@ -208,7 +208,6 @@ router.post('/resetpassword/:id', async function (req, res, next) {
 });
 
 
-
 router.get('/about', function(req, res, next) {
     res.render('about', { title: 'Express' });
   });
